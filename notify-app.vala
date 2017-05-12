@@ -18,10 +18,24 @@ public class MyApp : Gtk.Application {
 
 		show_button.clicked.connect(() => {
 			var notification = new Notification (_("Hello World"));
+			var image = new Gtk.Image.from_icon_name ("dialog-warning", Gtk.IconSize.DIALOG);
+			notification.set_icon (image.gicon);
 			notification.set_body (_("This is my first notification"));
 			this.send_notification ("notify.app", notification);
 		});
 
+		var replace_button = new Gtk.Button.with_label (_("Replace"));
+		grid.add (replace_button);
+
+		replace_button.clicked.connect (() => {
+			var notification = new Notification (_("Hello Again"));
+			notification.set_body (_("This is my second notification"));
+
+			var image = new Gtk.Image.from_icon_name ("dialog-warning", Gtk.IconSize.DIALOG);
+			notification.set_icon (image.gicon);
+			this.send_notification ("com.github.rugglcon.notify-app", notification);
+
+		});
 		app_window.add (grid);
 		app_window.show_all();
 	}
